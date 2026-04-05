@@ -2,8 +2,11 @@ import { StatCard } from '@/components/StatCard';
 import { EmptyState } from '@/components/EmptyState';
 import { Briefcase, Users, DollarSign, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
 export function FreelancerDashboard() {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -17,13 +20,13 @@ export function FreelancerDashboard() {
         <Card>
           <CardHeader><CardTitle className="text-base">Active Gigs</CardTitle></CardHeader>
           <CardContent>
-            <EmptyState icon={<Briefcase className="h-6 w-6" />} title="No active gigs" description="Start tracking your freelance work here." actionLabel="Add Gig" onAction={() => {}} />
+            <EmptyState icon={<Briefcase className="h-6 w-6" />} title="No active gigs" description="Start tracking your freelance work here." actionLabel="Add Gig" onAction={() => navigate('/gigs')} />
           </CardContent>
         </Card>
         <Card>
           <CardHeader><CardTitle className="text-base">Earnings Overview</CardTitle></CardHeader>
           <CardContent>
-            <EmptyState icon={<DollarSign className="h-6 w-6" />} title="No earnings data" description="Log your first payment to see earnings insights." actionLabel="Log Earning" onAction={() => {}} />
+            <EmptyState icon={<DollarSign className="h-6 w-6" />} title="No earnings data" description="Log your first payment to see earnings insights." actionLabel="Log Earning" onAction={() => navigate('/earnings')} />
           </CardContent>
         </Card>
       </div>
