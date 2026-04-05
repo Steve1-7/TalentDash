@@ -31,9 +31,7 @@ export default function DashboardPage() {
           </p>
         </div>
         <RoleDashboard />
-        <div>
-          <SupabaseDemo />
-        </div>
+        {import.meta.env.DEV && <SupabaseDemo />}
       </div>
     </DashboardLayout>
   );

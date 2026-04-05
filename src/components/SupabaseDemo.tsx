@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as api from '../lib/api';
+import { Button } from '@/components/ui/button';
 
 export default function SupabaseDemo(): JSX.Element {
   const [profiles, setProfiles] = useState<any[]>([]);
@@ -45,14 +46,14 @@ export default function SupabaseDemo(): JSX.Element {
     <div className="p-4">
       <h2 className="text-xl font-semibold">Supabase Functions Demo</h2>
       <div className="mt-3">
-        <form onSubmit={addProfile} className="mb-2">
-          <input value={name} onChange={e => setName(e.target.value)} placeholder="Full name" className="input" />
-          <button className="btn ml-2" type="submit">Add profile</button>
+        <form onSubmit={addProfile} className="mb-2 flex flex-col sm:flex-row gap-2">
+          <input value={name} onChange={e => setName(e.target.value)} placeholder="Full name" className="input flex-1" />
+          <Button type="submit" className="w-full sm:w-auto">Add profile</Button>
         </form>
 
-        <form onSubmit={addGig} className="mb-4">
-          <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Gig title" className="input" />
-          <button className="btn ml-2" type="submit">Add gig</button>
+        <form onSubmit={addGig} className="mb-4 flex flex-col sm:flex-row gap-2">
+          <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Gig title" className="input flex-1" />
+          <Button type="submit" className="w-full sm:w-auto">Add gig</Button>
         </form>
 
         <div>
