@@ -29,9 +29,12 @@ jobs:
         run: supabase link --project-ref ryqsqwjycnrfiikglbnr
 
       - name: Set Supabase secrets (optional)
-        if: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY != '' }}
         run: |
-          supabase secrets set SUPABASE_SERVICE_ROLE_KEY="${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" --project-ref ryqsqwjycnrfiikglbnr
+          if [ -n "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" ]; then
+            supabase secrets set SUPABASE_SERVICE_ROLE_KEY="${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" --project-ref ryqsqwjycnrfiikglbnr
+          else
+            echo "SUPABASE_SERVICE_ROLE_KEY not provided; skipping setting project secret."
+          fi
 
       - name: Deploy profiles function
         working-directory: backend-supabase
