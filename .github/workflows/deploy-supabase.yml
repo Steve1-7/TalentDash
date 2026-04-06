@@ -20,7 +20,12 @@ jobs:
           node-version: '18'
 
       - name: Install Supabase CLI
-        run: npm install -g supabase
+        run: |
+          # Download the latest Supabase CLI binary for Linux x86_64 and install
+          echo "Downloading Supabase CLI..."
+          curl -L "https://github.com/supabase/cli/releases/latest/download/supabase_linux_amd64.tar.gz" -o /tmp/supabase.tar.gz
+          sudo tar -C /usr/local/bin -xzf /tmp/supabase.tar.gz
+          supabase --version
 
       - name: Supabase login
         env:
