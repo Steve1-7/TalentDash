@@ -5,6 +5,7 @@ import { AppSidebar } from '@/components/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Bell, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 
 interface DashboardLayoutProps {
@@ -34,10 +35,23 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
-                <Bell className="h-4 w-4" />
-                <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-accent" />
-              </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="relative text-muted-foreground hover:text-foreground h-8 w-8 sm:h-10 sm:w-10"
+                    aria-label="Notifications"
+                    title="Notifications"
+                  >
+                    <Bell className="h-4 w-4" />
+                    <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-accent" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent side="bottom" align="end">
+                  <div className="text-sm">No notifications</div>
+                </PopoverContent>
+              </Popover>
               {/* avatar removed per request */}
             </div>
           </header>

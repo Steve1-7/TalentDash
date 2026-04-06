@@ -1,0 +1,42 @@
+name: Deploy Supabase Functions
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy Supabase Edge Functions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Supabase CLI
+        run: npm install -g supabase
+
+      - name: Supabase login
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: supabase login --token "$SUPABASE_ACCESS_TOKEN"
+
+      - name: Link Supabase project
+        run: supabase link --project-ref ryqsqwjycnrfiikglbnr
+
+      - name: Set Supabase secrets (optional)
+        if: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY != '' }}
+        run: |
+          supabase secrets set SUPABASE_SERVICE_ROLE_KEY="${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" --project-ref ryqsqwjycnrfiikglbnr
+
+      - name: Deploy profiles function
+        working-directory: backend-supabase
+        run: supabase functions deploy profiles --project-ref ryqsqwjycnrfiikglbnr
+
+      - name: Deploy gigs function
+        working-directory: backend-supabase
+        run: supabase functions deploy gigs --project-ref ryqsqwjycnrfiikglbnr

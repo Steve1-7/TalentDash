@@ -20,52 +20,74 @@ serve(async (req: Request) => {
     const url = new URL(req.url);
     const method = req.method;
 
+    // CORS preflight
+    if (method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: corsHeaders() });
+    }
+
     if (method === "GET") {
       const id = url.searchParams.get("id");
       if (id) {
         const { data, error } = await supabase.from("gigs").select("*").eq("id", id).single();
-        if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { "Content-Type": "application/json" } });
-        return new Response(JSON.stringify(data), { headers: { "Content-Type": "application/json" } });
+        if (error) return jsonError(error.message, 500);
+        return jsonResponse(data);
       }
       const { data, error } = await supabase.from("gigs").select("*");
-      if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { "Content-Type": "application/json" } });
-      return new Response(JSON.stringify(data), { headers: { "Content-Type": "application/json" } });
+      if (error) return jsonError(error.message, 500);
+      return jsonResponse(data);
     }
 
     if (method === "POST") {
       const payload = await req.json();
       const parsed = gigSchema.safeParse(payload);
       if (!parsed.success) {
-        return new Response(JSON.stringify({ error: parsed.error.errors }), { status: 400, headers: { "Content-Type": "application/json" } });
+        return jsonError(JSON.stringify(parsed.error.errors), 400);
       }
       const { data, error } = await supabase.from("gigs").insert(parsed.data).select().single();
-      if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { "Content-Type": "application/json" } });
-      return new Response(JSON.stringify(data), { status: 201, headers: { "Content-Type": "application/json" } });
+      if (error) return jsonError(error.message, 500);
+      return jsonResponse(data, 201);
     }
 
     if (method === "PUT") {
       const payload = await req.json();
       const parsed = gigSchema.partial().safeParse(payload);
       if (!parsed.success) {
-        return new Response(JSON.stringify({ error: parsed.error.errors }), { status: 400, headers: { "Content-Type": "application/json" } });
+        return jsonError(JSON.stringify(parsed.error.errors), 400);
       }
       const id = payload.id;
       if (!id) return new Response(JSON.stringify({ error: "id is required" }), { status: 400, headers: { "Content-Type": "application/json" } });
       const { data, error } = await supabase.from("gigs").update(parsed.data).eq("id", id).select().single();
-      if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { "Content-Type": "application/json" } });
-      return new Response(JSON.stringify(data), { headers: { "Content-Type": "application/json" } });
+      if (error) return jsonError(error.message, 500);
+      return jsonResponse(data);
     }
 
     if (method === "DELETE") {
       const id = url.searchParams.get("id");
-      if (!id) return new Response(JSON.stringify({ error: "id required" }), { status: 400, headers: { "Content-Type": "application/json" } });
+      if (!id) return jsonError('id required', 400);
       const { error } = await supabase.from("gigs").delete().eq("id", id);
-      if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: { "Content-Type": "application/json" } });
-      return new Response(JSON.stringify({ success: true }), { headers: { "Content-Type": "application/json" } });
+      if (error) return jsonError(error.message, 500);
+      return jsonResponse({ success: true });
     }
 
-    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: corsHeaders() });
   } catch (err) {
-    return new Response(JSON.stringify({ error: String(err) }), { status: 500, headers: { "Content-Type": "application/json" } });
+    return jsonError(String(err), 500);
   }
 });
+
+function corsHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  };
+}
+
+function jsonResponse(data: unknown, status = 200) {
+  return new Response(JSON.stringify(data), { status, headers: corsHeaders() });
+}
+
+function jsonError(message: string, status = 500) {
+  return new Response(JSON.stringify({ error: message }), { status, headers: corsHeaders() });
+}
