@@ -35,6 +35,16 @@ jobs:
       - name: Link Supabase project
         run: supabase link --project-ref ryqsqwjycnrfiikglbnr
 
+      - name: Prepare Supabase functions directory
+        working-directory: backend-supabase
+        run: |
+          # Supabase CLI expects functions under supabase/functions
+          mkdir -p supabase/functions
+          # copy our functions into the expected location
+          if [ -d functions ]; then
+            cp -r functions/* supabase/functions/ || true
+          fi
+
       - name: Set Supabase secrets (optional)
         run: |
           if [ -n "${{ secrets.SERVICE_ROLE_KEY }}" ]; then
