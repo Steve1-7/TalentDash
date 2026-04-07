@@ -37,10 +37,11 @@ jobs:
 
       - name: Set Supabase secrets (optional)
         run: |
-          if [ -n "${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" ]; then
-            supabase secrets set SUPABASE_SERVICE_ROLE_KEY="${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" --project-ref ryqsqwjycnrfiikglbnr
+          if [ -n "${{ secrets.SERVICE_ROLE_KEY }}" ]; then
+            # Supabase project secret names cannot start with SUPABASE_
+            supabase secrets set SERVICE_ROLE_KEY="${{ secrets.SERVICE_ROLE_KEY }}" --project-ref ryqsqwjycnrfiikglbnr
           else
-            echo "SUPABASE_SERVICE_ROLE_KEY not provided; skipping setting project secret."
+            echo "SERVICE_ROLE_KEY not provided; skipping setting project secret."
           fi
 
       - name: Deploy profiles function
