@@ -79,7 +79,7 @@ export const useTasksStore = create<TasksState>()(
       },
       deleteTask: (id) => set({ tasks: get().tasks.filter((t) => t.id !== id) }),
     }),
-    { name: "talentdash-tasks" },
+    { name: "promptlyos-tasks" },
   ),
 );
 

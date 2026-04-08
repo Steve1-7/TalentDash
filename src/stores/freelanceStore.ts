@@ -235,7 +235,7 @@ export const useFreelanceStore = create<FreelanceState>()(
       },
       deleteProposal: (id) => set({ proposals: get().proposals.filter((p) => p.id !== id) }),
     }),
-    { name: "talentdash-freelance" },
+    { name: "promptlyos-freelance" },
   ),
 );
 

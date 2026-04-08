@@ -27,7 +27,7 @@ export default function LandingPage() {
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
         <div className="flex items-center gap-2">
-          <span className="font-semibold tracking-tight">TalentDash</span>
+          <span className="font-semibold tracking-tight">PromptlyOS</span>
         </div>
         <div className="flex items-center gap-3">
           <Button variant="ghost" asChild>
@@ -97,7 +97,7 @@ export default function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t py-8 text-center text-sm text-muted-foreground">
-        <p>© 2026 TalentDash. All rights reserved.</p>
+        <p>© 2026 PromptlyOS. All rights reserved.</p>
       </footer>
     </div>
   );

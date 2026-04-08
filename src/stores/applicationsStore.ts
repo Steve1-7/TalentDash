@@ -73,7 +73,7 @@ export const useApplicationsStore = create<ApplicationsState>()(
       },
       deleteApplication: (id) => set({ applications: get().applications.filter((a) => a.id !== id) }),
     }),
-    { name: "talentdash-applications" },
+    { name: "promptlyos-applications" },
   ),
 );
 

@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/authStore';
 import { AppSidebar } from '@/components/AppSidebar';
+import { PersonaSwitcher } from '@/components/PersonaSwitcher';
+import { TopBarCounter } from '@/components/TopBarCounter';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Bell, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -35,6 +37,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <TopBarCounter />
+              <PersonaSwitcher />
               <Popover>
                 <PopoverTrigger asChild>
                   <Button

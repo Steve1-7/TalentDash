@@ -115,7 +115,7 @@ export const useRecruiterStore = create<RecruiterState>()(
       },
       deleteJobPost: (id) => set({ jobPosts: get().jobPosts.filter((jp) => jp.id !== id) }),
     }),
-    { name: "talentdash-recruiter" },
+    { name: "promptlyos-recruiter" },
   ),
 );
 

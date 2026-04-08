@@ -66,7 +66,7 @@ export const useLearningStore = create<LearningState>()(
       },
       deleteGoal: (id) => set({ goals: get().goals.filter((g) => g.id !== id) }),
     }),
-    { name: "talentdash-learning" },
+    { name: "promptlyos-learning" },
   ),
 );
 

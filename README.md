@@ -1,3 +1,3 @@
-# TalentDash
+# PromptlyOS
 
-Premium multi-role career + work operating system.
+Premium multi-role career & work operating system.

@@ -68,7 +68,7 @@ export function AppSidebar() {
       <SidebarContent>
         {/* Logo */}
         <div className="px-4 py-4 flex items-center gap-2">
-          <span className="font-semibold text-sm tracking-tight">TalentDash</span>
+          <span className="font-semibold text-sm tracking-tight">PromptlyOS</span>
         </div>
 
         {/* Main Nav */}

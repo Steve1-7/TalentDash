@@ -66,9 +66,14 @@ export const useProjectsStore = create<ProjectsState>()(
         });
       },
       deleteProject: (id) => set({ projects: get().projects.filter((p) => p.id !== id) }),
-      archiveProject: (id) => get().updateProject(id, { status: "archived" }),
+      archiveProject: (id) => {
+        const project = get().projects.find(p => p.id === id);
+        if (project) {
+          get().updateProject(id, { name: project.name, status: "archived" });
+        }
+      },
     }),
-    { name: "talentdash-projects" },
+    { name: "promptlyos-projects" },
   ),
 );
 

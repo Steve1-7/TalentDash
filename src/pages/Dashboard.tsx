@@ -4,7 +4,6 @@ import { DeveloperDashboard } from '@/components/dashboards/DeveloperDashboard';
 import { FreelancerDashboard } from '@/components/dashboards/FreelancerDashboard';
 import { RecruiterDashboard } from '@/components/dashboards/RecruiterDashboard';
 import { ManagerDashboard } from '@/components/dashboards/ManagerDashboard';
-import SupabaseDemo from '@/components/SupabaseDemo';
 
 export default function DashboardPage() {
   const { user } = useAuthStore();
@@ -31,7 +30,6 @@ export default function DashboardPage() {
           </p>
         </div>
         <RoleDashboard />
-        {import.meta.env.DEV && <SupabaseDemo />}
       </div>
     </DashboardLayout>
   );
