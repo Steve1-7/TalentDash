@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Store Debug</title>
+</head>
+<body>
+    <h1>Store Debug Console</h1>
+    <button onclick="checkStores()">Check All Stores</button>
+    <button onclick="clearStores()">Clear All Stores</button>
+    <button onclick="migrateData()">Run Migration</button>
+    <div id="output"></div>
+    
+    <script>
+        function checkStores() {
+            const output = document.getElementById('output');
+            const stores = [
+                'promptlyos-projects',
+                'promptlyos-auth', 
+                'promptlyos-applications',
+                'promptlyos-freelance',
+                'promptlyos-recruiter',
+                'promptlyos-tasks',
+                'promptlyos-learning',
+                'promptlyos-globalMetrics',
+                'talentdash-projects',
+                'talentdash-auth',
+                'talentdash-applications',
+                'talentdash-freelance',
+                'talentdash-recruiter',
+                'talentdash-tasks',
+                'talentdash-learning',
+                'talentdash-globalMetrics'
+            ];
+            
+            let html = '<h2>Store Status:</h2>';
+            stores.forEach(store => {
+                const data = localStorage.getItem(store);
+                html += `<p><strong>${store}:</strong> ${data ? 'EXISTS (' + data.length + ' chars)' : 'EMPTY'}</p>`;
+            });
+            
+            output.innerHTML = html;
+        }
+        
+        function clearStores() {
+            const stores = [
+                'promptlyos-projects',
+                'promptlyos-auth', 
+                'promptlyos-applications',
+                'promptlyos-freelance',
+                'promptlyos-recruiter',
+                'promptlyos-tasks',
+                'promptlyos-learning',
+                'promptlyos-globalMetrics',
+                'talentdash-projects',
+                'talentdash-auth',
+                'talentdash-applications',
+                'talentdash-freelance',
+                'talentdash-recruiter',
+                'talentdash-tasks',
+                'talentdash-learning',
+                'talentdash-globalMetrics'
+            ];
+            
+            stores.forEach(store => localStorage.removeItem(store));
+            document.getElementById('output').innerHTML = '<h2>All stores cleared</h2>';
+        }
+        
+        function migrateData() {
+            // Simulate migration
+            const oldProjects = localStorage.getItem('talentdash-projects');
+            if (oldProjects) {
+                localStorage.setItem('promptlyos-projects', oldProjects);
+                localStorage.removeItem('talentdash-projects');
+                console.log('Migrated projects');
+            }
+            
+            document.getElementById('output').innerHTML = '<h2>Migration completed</h2>';
+        }
+    </script>
+</body>
+</html>

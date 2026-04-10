@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Test</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const { createElement } = React;
+        const { createRoot } = ReactDOM;
+        
+        const root = createRoot(document.getElementById('root'));
+        root.render(createElement('div', null, 'Simple React test - if you see this, React is working!'));
+    </script>
+</body>
+</html>

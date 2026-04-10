@@ -3,8 +3,8 @@ import * as api from '../lib/api';
 import { Button } from '@/components/ui/button';
 
 export default function SupabaseDemo(): JSX.Element {
-  const [profiles, setProfiles] = useState<any[]>([]);
-  const [gigs, setGigs] = useState<any[]>([]);
+  const [profiles, setProfiles] = useState<{id: string; full_name: string; headline?: string; avatar_url?: string; created_at: string}[]>([]);
+  const [gigs, setGigs] = useState<{id: string; title: string; description?: string; price: number; owner_id: string; created_at: string}[]>([]);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');

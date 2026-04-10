@@ -17,7 +17,7 @@ export function RecruiterDashboard() {
   const navigate = useNavigate();
   
   const metrics = getRoleMetrics('recruiter');
-  const roleMetrics = metrics as any;
+  const roleMetrics = metrics as Record<string, number>;
   
   const activeCandidates = candidates.filter(c => ['applied', 'interview', 'offer'].includes(c.stage)).length;
   const openPositions = jobPosts.filter(jp => jp.status === 'open').length;

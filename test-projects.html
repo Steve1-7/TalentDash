@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Projects Store</title>
+</head>
+<body>
+    <h1>Testing Projects Store</h1>
+    <div id="output"></div>
+    
+    <script>
+        // Check localStorage data
+        const projectsData = localStorage.getItem('promptlyos-projects');
+        const oldProjectsData = localStorage.getItem('talentdash-projects');
+        
+        document.getElementById('output').innerHTML = `
+            <h2>Projects Data Check</h2>
+            <p><strong>New Store (promptlyos-projects):</strong> ${projectsData || 'NULL'}</p>
+            <p><strong>Old Store (talentdash-projects):</strong> ${oldProjectsData || 'NULL'}</p>
+            <p><strong>Migration Status:</strong> ${oldProjectsData && !projectsData ? 'Migration failed' : 'Migration successful or no old data'}</p>
+        `;
+    </script>
+</body>
+</html>

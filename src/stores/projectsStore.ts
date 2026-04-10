@@ -26,12 +26,23 @@ type ProjectsState = {
   updateProject: (id: string, updates: ProjectInput) => void;
   deleteProject: (id: string) => void;
   archiveProject: (id: string) => void;
+  debugProjects: () => void;
 };
 
 export const useProjectsStore = create<ProjectsState>()(
   persist(
     (set, get) => ({
       projects: [],
+      
+      // Debug function to check projects
+      debugProjects: () => {
+        console.log('Projects Store Debug:', {
+          projects: get().projects,
+          projectsLength: get().projects.length,
+          localStorageKey: 'promptlyos-projects',
+          localStorageData: localStorage.getItem('promptlyos-projects')
+        });
+      },
       createProject: (input) => {
         const now = new Date().toISOString();
         const project: Project = {

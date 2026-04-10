@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, BarChart3, Users, Briefcase, Code } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { useAuthStore } from '@/stores/authStore';
 import { Navigate } from 'react-router-dom';
 
@@ -12,10 +11,6 @@ const features = [
   { icon: BarChart3, title: 'Manager View', desc: 'Team oversight, performance insights, and task assignments.' },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.5 } }),
-};
 
 export default function LandingPage() {
   const { isAuthenticated, isOnboarded } = useAuthStore();
@@ -27,7 +22,7 @@ export default function LandingPage() {
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 py-4 max-w-6xl mx-auto">
         <div className="flex items-center gap-2">
-          <span className="font-semibold tracking-tight">PromptlyOS</span>
+          <img src="/img/logo.png" alt="PromptlyOS" className="h-32" style={{ minWidth: '80px' }} />
         </div>
         <div className="flex items-center gap-3">
           <Button variant="ghost" asChild>
@@ -41,11 +36,7 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 pt-24 pb-20 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border text-sm text-muted-foreground mb-6">
             <span className="h-2 w-2 rounded-full bg-accent" />
             Built for modern careers
@@ -69,20 +60,15 @@ export default function LandingPage() {
               <Link to="/login">Log in</Link>
             </Button>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Features */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {features.map((f, i) => (
-            <motion.div
+            <div
               key={f.title}
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
               className="p-6 rounded-xl border bg-card card-hover"
             >
               <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center mb-4">
@@ -90,7 +76,7 @@ export default function LandingPage() {
               </div>
               <h3 className="font-semibold mb-1">{f.title}</h3>
               <p className="text-sm text-muted-foreground">{f.desc}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>

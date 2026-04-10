@@ -157,7 +157,7 @@ export const useGlobalMetricsStore = create<GlobalMetricsState>()(
             ...currentMetrics,
             [role]: {
               ...currentMetrics[role],
-              [metric]: (currentMetrics[role] as any)[metric] + value,
+              [metric]: (currentMetrics[role] as Record<string, number>)[metric] + value,
             },
           };
           set({
@@ -177,17 +177,7 @@ export const useGlobalMetricsStore = create<GlobalMetricsState>()(
 
 // Auto-update subscription
 useFreelanceStore.subscribe(
-  (state) => state.gigs,
-  () => {
-    if (useGlobalMetricsStore.getState().autoUpdateEnabled) {
-      useGlobalMetricsStore.getState().updateMetrics();
-    }
-  }
-);
-
-useFreelanceStore.subscribe(
-  (state) => state.proposals,
-  () => {
+  (state) => {
     if (useGlobalMetricsStore.getState().autoUpdateEnabled) {
       useGlobalMetricsStore.getState().updateMetrics();
     }
@@ -195,8 +185,7 @@ useFreelanceStore.subscribe(
 );
 
 useRecruiterStore.subscribe(
-  (state) => state.candidates,
-  () => {
+  (state) => {
     if (useGlobalMetricsStore.getState().autoUpdateEnabled) {
       useGlobalMetricsStore.getState().updateMetrics();
     }
@@ -204,8 +193,7 @@ useRecruiterStore.subscribe(
 );
 
 useProjectsStore.subscribe(
-  (state) => state.projects,
-  () => {
+  (state) => {
     if (useGlobalMetricsStore.getState().autoUpdateEnabled) {
       useGlobalMetricsStore.getState().updateMetrics();
     }

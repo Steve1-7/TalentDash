@@ -21,7 +21,7 @@ export function DeveloperDashboard() {
   const navigate = useNavigate();
   
   const metrics = getRoleMetrics('developer');
-  const roleMetrics = metrics as any;
+  const roleMetrics = metrics as Record<string, number>;
   
   const activeProjects = projects.filter(p => p.status === 'active').length;
   const completedProjects = projects.filter(p => p.status === 'completed').length;

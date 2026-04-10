@@ -24,7 +24,7 @@ export function TopBarCounter({ className }: TopBarCounterProps) {
   if (!user) return null;
 
   const metrics = getRoleMetrics(user.role);
-  const roleMetrics = metrics as any;
+  const roleMetrics = metrics as Record<string, number>;
 
   // Animate counter changes
   useEffect(() => {

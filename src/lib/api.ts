@@ -20,7 +20,7 @@ if (!FUNCTIONS_URL && !PROFILES_URL && !GIGS_URL) {
   console.warn('VITE_SUPABASE_FUNCTIONS_URL / VITE_SUPABASE_PROFILES_URL / VITE_SUPABASE_GIGS_URL not set. Frontend calls will fail until configured.');
 }
 
-async function request<T = any>(fn: string, method = 'GET', body?: unknown) {
+async function request<T = unknown>(fn: string, method = 'GET', body?: unknown) {
   const base = baseFor(fn.replace(/\?.*$/, ''));
   if (!base) throw new Error('Supabase functions URL not configured for this function');
   const url = `${base.replace(/\/$/, '')}/${fn}`;
@@ -42,19 +42,52 @@ async function request<T = any>(fn: string, method = 'GET', body?: unknown) {
   }
 }
 
+// Profile interfaces
+interface Profile {
+  id: string;
+  full_name: string;
+  headline?: string;
+  avatar_url?: string;
+  created_at: string;
+}
+
+interface ProfileUpdate {
+  id: string;
+  full_name?: string;
+  headline?: string;
+  avatar_url?: string;
+}
+
 // Profiles
-export const getProfiles = () => request<any[]>('profiles', 'GET');
-export const getProfile = (id: string) => request<any>(`profiles?id=${encodeURIComponent(id)}`, 'GET');
-export const createProfile = (payload: { full_name: string; headline?: string; avatar_url?: string }) => request<any>('profiles', 'POST', payload);
-export const updateProfile = (payload: { id: string } & Partial<{ full_name: string; headline: string; avatar_url: string }>) => request<any>('profiles', 'PUT', payload);
-export const deleteProfile = (id: string) => request<any>(`profiles?id=${encodeURIComponent(id)}`, 'DELETE');
+export const getProfiles = () => request<Profile[]>('profiles', 'GET');
+export const getProfile = (id: string) => request<Profile>(`profiles?id=${encodeURIComponent(id)}`, 'GET');
+export const createProfile = (payload: { full_name: string; headline?: string; avatar_url?: string }) => request<Profile>('profiles', 'POST', payload);
+export const updateProfile = (payload: ProfileUpdate) => request<Profile>('profiles', 'PUT', payload);
+export const deleteProfile = (id: string) => request<unknown>(`profiles?id=${encodeURIComponent(id)}`, 'DELETE');
+
+// Gig interfaces
+interface Gig {
+  id: string;
+  title: string;
+  description?: string;
+  price: number;
+  owner_id: string;
+  created_at: string;
+}
+
+interface GigUpdate {
+  id: string;
+  title?: string;
+  description?: string;
+  price?: number;
+}
 
 // Gigs
-export const getGigs = () => request<any[]>('gigs', 'GET');
-export const getGig = (id: string) => request<any>(`gigs?id=${encodeURIComponent(id)}`, 'GET');
-export const createGig = (payload: { title: string; description?: string; price: number; owner_id: string }) => request<any>('gigs', 'POST', payload);
-export const updateGig = (payload: { id: string } & Partial<{ title: string; description: string; price: number }>) => request<any>('gigs', 'PUT', payload);
-export const deleteGig = (id: string) => request<any>(`gigs?id=${encodeURIComponent(id)}`, 'DELETE');
+export const getGigs = () => request<Gig[]>('gigs', 'GET');
+export const getGig = (id: string) => request<Gig>(`gigs?id=${encodeURIComponent(id)}`, 'GET');
+export const createGig = (payload: { title: string; description?: string; price: number; owner_id: string }) => request<Gig>('gigs', 'POST', payload);
+export const updateGig = (payload: GigUpdate) => request<Gig>('gigs', 'PUT', payload);
+export const deleteGig = (id: string) => request<unknown>(`gigs?id=${encodeURIComponent(id)}`, 'DELETE');
 
 export default {
   getProfiles,

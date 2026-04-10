@@ -17,7 +17,7 @@ export function ManagerDashboard() {
   const navigate = useNavigate();
   
   const metrics = getRoleMetrics('manager');
-  const roleMetrics = metrics as any;
+  const roleMetrics = metrics as Record<string, number>;
   
   const activeProjects = projects.filter(p => p.status === 'active').length;
   return (

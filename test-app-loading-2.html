@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>App Loading Test</title>
+</head>
+<body>
+    <h1>App Loading Test</h1>
+    <div id="test-output"></div>
+    
+    <script>
+        // Test if app loads
+        window.addEventListener('load', () => {
+            const output = document.getElementById('test-output');
+            
+            // Check if React app loaded
+            setTimeout(() => {
+                if (document.querySelector('#root')) {
+                    output.innerHTML = '<div style="color: green;">✅ React app loaded successfully!</div>';
+                } else {
+                    output.innerHTML = '<div style="color: red;">❌ React app failed to load</div>';
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

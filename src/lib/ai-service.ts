@@ -43,7 +43,7 @@ class AIService {
   async generateResponse(
     userMessage: string,
     userRole: string,
-    userMetrics: any,
+    userMetrics: Record<string, number>,
     conversationHistory: Array<{ role: string; content: string }> = []
   ): Promise<AIResponse> {
     try {
@@ -68,11 +68,10 @@ class AIService {
 
       // Call OpenAI API
       const completion = await openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
-        messages,
+        model: 'gpt-3.5-turbo',
+        messages: messages.map(msg => ({ role: msg.role as 'user' | 'assistant' | 'system', content: msg.content })),
         temperature: 0.7,
-        max_tokens: 500,
-        response_format: { type: 'text' }
+        max_tokens: 500
       });
 
       const content = completion.choices[0]?.message?.content || 'I apologize, but I encountered an issue processing your request.';
@@ -173,7 +172,7 @@ class AIService {
     return { companies, technologies, skills };
   }
 
-  private getSystemPrompt(userRole: string, userMetrics: any): string {
+  private getSystemPrompt(userRole: string, userMetrics: Record<string, number>): string {
     const basePrompt = `You are the Core Intelligence (PCI) for PromptlyOS, an AI-native Career Operating System. You provide sophisticated, ambitious, and witty advice focused on the user's success.`;
 
     switch (userRole) {
@@ -283,7 +282,15 @@ Always emphasize data-driven decision making and team success.`;
     }
   }
 
-  private parseResearchResponse(entity: string, entityType: string, response: string): any {
+  private parseResearchResponse(entity: string, entityType: string, response: string): {
+  description: string;
+  marketTrends: string;
+  demandLevel: number;
+  averageSalary?: number;
+  growthRate: number;
+  companies?: string[];
+  skills?: string[];
+} {
     // In production, implement proper JSON parsing
     // For now, return structured mock data
     return {
@@ -297,7 +304,7 @@ Always emphasize data-driven decision making and team success.`;
     };
   }
 
-  private async generateIntelligenceBrief(entities: any, userRole: string) {
+  private async generateIntelligenceBrief(entities: { companies: string[]; technologies: string[]; skills: string[] }, userRole: string) {
     if (entities.companies.length > 0) {
       const company = entities.companies[0];
       const research = await this.performMarketResearch(company, 'company');
@@ -352,7 +359,7 @@ Always emphasize data-driven decision making and team success.`;
     };
   }
 
-  private getFallbackResearchData(entity: string, entityType: string): MarketResearchData {
+  private getFallbackResearchData(entity: string, entityType: 'company' | 'skill' | 'technology'): MarketResearchData {
     return {
       entity,
       entityType,

@@ -68,6 +68,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        promptly: {
+          main: "#111111",
+          sidebar: "#2B6CC0",
+          primary: "#33FFFF",
+          accent: "#FF33FF",
+          "text-primary": "#FFFFFF",
+          "text-secondary": "#A0FBFF",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

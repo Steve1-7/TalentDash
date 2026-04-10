@@ -85,7 +85,7 @@ export default function ProjectsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search projects..." className="pl-9" />
           </div>
-          <Select value={status} onValueChange={(v) => setStatus(v as any)}>
+          <Select value={status} onValueChange={(v) => setStatus(v as 'all' | 'active' | 'completed' | 'archived')}>
             <SelectTrigger>
               <SelectValue placeholder="Status" />
             </SelectTrigger>

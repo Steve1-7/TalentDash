@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Migration & Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        button { margin: 10px; padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border: 1px solid #dee2e6; }
+    </style>
+</head>
+<body>
+    <h1>Projects Migration & Test</h1>
+    
+    <h2>Step 1: Check Current Data</h2>
+    <button onclick="checkData()">Check localStorage Data</button>
+    <div id="current-data"></div>
+    
+    <h2>Step 2: Run Migration</h2>
+    <button onclick="runMigration()">Migrate from TalentDash</button>
+    <div id="migration-result"></div>
+    
+    <h2>Step 3: Add Sample Project</h2>
+    <button onclick="addSampleProject()">Add Sample Project</button>
+    <div id="sample-result"></div>
+    
+    <div id="output"></div>
+    
+    <script>
+        function checkData() {
+            const output = document.getElementById('current-data');
+            const oldProjects = localStorage.getItem('talentdash-projects');
+            const newProjects = localStorage.getItem('promptlyos-projects');
+            
+            output.innerHTML = `
+                <div class="result">
+                    <h3>Current Data Status:</h3>
+                    <p><strong>Old projects (talentdash-projects):</strong> ${oldProjects ? 'EXISTS (' + oldProjects.length + ' chars)' : 'EMPTY'}</p>
+                    <p><strong>New projects (promptlyos-projects):</strong> ${newProjects ? 'EXISTS (' + newProjects.length + ' chars)' : 'EMPTY'}</p>
+                    <p><strong>Migration Needed:</strong> ${oldProjects && !newProjects ? 'YES' : 'NO'}</p>
+                </div>
+            `;
+        }
+        
+        function runMigration() {
+            const output = document.getElementById('migration-result');
+            const oldProjects = localStorage.getItem('talentdash-projects');
+            
+            if (oldProjects) {
+                localStorage.setItem('promptlyos-projects', oldProjects);
+                localStorage.removeItem('talentdash-projects');
+                output.innerHTML = '<div class="result"><h3>Migration Complete!</h3><p>Projects data migrated from talentdash-projects to promptlyos-projects</p></div>';
+            } else {
+                output.innerHTML = '<div class="result"><h3>No Migration Needed</h3><p>No old data found to migrate</p></div>';
+            }
+        }
+        
+        function addSampleProject() {
+            const output = document.getElementById('sample-result');
+            const projects = localStorage.getItem('promptlyos-projects');
+            let projectsArray = [];
+            
+            try {
+                projectsArray = projects ? JSON.parse(projects) : [];
+            } catch (e) {
+                projectsArray = [];
+            }
+            
+            const sampleProject = {
+                id: crypto.randomUUID(),
+                name: 'Sample Project',
+                description: 'This is a sample project to fix the display issue',
+                status: 'active',
+                tags: ['react', 'typescript'],
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            projectsArray.push(sampleProject);
+            localStorage.setItem('promptlyos-projects', JSON.stringify(projectsArray));
+            
+            output.innerHTML = '<div class="result"><h3>Sample Project Added!</h3><p>Project should now display in the dashboard</p></div>';
+        }
+    </script>
+</body>
+</html>

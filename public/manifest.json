@@ -1,0 +1,21 @@
+{
+  "name": "PromptlyOS",
+  "short_name": "PromptlyOS",
+  "description": "Premium multi-role career & work operating system",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/img/favicon.png?v=2",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/favicon.png?v=2",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

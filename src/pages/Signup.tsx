@@ -15,7 +15,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (isAuthenticated && isOnboarded) return <Navigate to="/dashboard" replace />;
+  if (isAuthenticated) return <Navigate to={isOnboarded ? "/dashboard" : "/onboarding"} replace />;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +27,7 @@ export default function SignupPage() {
     try {
       await signup(email, password, name);
       navigate('/onboarding');
-    } catch (err: any) {
+    } catch (err: Error) {
       toast({ title: 'Error', description: err.message, variant: 'destructive' });
     } finally {
       setLoading(false);

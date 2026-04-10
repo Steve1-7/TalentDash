@@ -5,6 +5,7 @@ import { MarketIntelligenceFeed } from '@/components/MarketIntelligenceFeed';
 import { PCIChatBot } from '@/components/PCIChatBot';
 import { Briefcase, Users, DollarSign, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useFreelanceStore } from '@/stores/freelanceStore';
 import { useGlobalMetricsStore } from '@/stores/globalMetricsStore';
@@ -15,7 +16,7 @@ export function FreelancerDashboard() {
   const { getRoleMetrics } = useGlobalMetricsStore();
   
   const metrics = getRoleMetrics('freelancer');
-  const roleMetrics = metrics as any;
+  const roleMetrics = metrics as Record<string, number>;
 
   const activeGigs = gigs.filter(g => g.status === 'active').length;
   const totalEarnings = earnings.reduce((sum, e) => sum + e.amount, 0);
